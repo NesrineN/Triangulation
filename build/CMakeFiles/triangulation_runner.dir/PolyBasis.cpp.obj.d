@@ -1,11 +1,32 @@
-CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\main.cpp \
- C:/msys64/mingw64/include/c++/15.2.0/iostream \
- C:/msys64/mingw64/include/c++/15.2.0/bits/requires_hosted.h \
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj: \
+ C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\PolyBasis.cpp \
+ C:/msys64/mingw64/include/gsl/gsl_poly.h \
+ C:/msys64/mingw64/include/c++/15.2.0/stdlib.h \
+ C:/msys64/mingw64/include/c++/15.2.0/cstdlib \
  C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++config.h \
  C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/os_defines.h \
  C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/cpu_defines.h \
  C:/msys64/mingw64/include/c++/15.2.0/pstl/pstl_config.h \
+ C:/msys64/mingw64/include/stdlib.h C:/msys64/mingw64/include/corecrt.h \
+ C:/msys64/mingw64/include/_mingw.h \
+ C:/msys64/mingw64/include/_mingw_mac.h \
+ C:/msys64/mingw64/include/_mingw_secapi.h \
+ C:/msys64/mingw64/include/vadefs.h \
+ C:/msys64/mingw64/include/sdks/_mingw_ddk.h \
+ C:/msys64/mingw64/include/corecrt_wstdlib.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h \
+ C:/msys64/mingw64/include/limits.h C:/msys64/mingw64/include/crtdefs.h \
+ C:/msys64/mingw64/include/sec_api/stdlib_s.h \
+ C:/msys64/mingw64/include/malloc.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mm_malloc.h \
+ C:/msys64/mingw64/include/errno.h \
+ C:/msys64/mingw64/include/c++/15.2.0/bits/std_abs.h \
+ C:/msys64/mingw64/include/gsl/gsl_inline.h \
+ C:/msys64/mingw64/include/gsl/gsl_complex.h \
+ C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/matrix.h \
+ C:/msys64/mingw64/include/c++/15.2.0/iostream \
+ C:/msys64/mingw64/include/c++/15.2.0/bits/requires_hosted.h \
  C:/msys64/mingw64/include/c++/15.2.0/ostream \
  C:/msys64/mingw64/include/c++/15.2.0/bits/ostream.h \
  C:/msys64/mingw64/include/c++/15.2.0/ios \
@@ -14,14 +35,8 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/memoryfwd.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/postypes.h \
  C:/msys64/mingw64/include/c++/15.2.0/cwchar \
- C:/msys64/mingw64/include/wchar.h C:/msys64/mingw64/include/corecrt.h \
- C:/msys64/mingw64/include/_mingw.h \
- C:/msys64/mingw64/include/_mingw_mac.h \
- C:/msys64/mingw64/include/_mingw_secapi.h \
- C:/msys64/mingw64/include/vadefs.h \
- C:/msys64/mingw64/include/sdks/_mingw_ddk.h \
+ C:/msys64/mingw64/include/wchar.h \
  C:/msys64/mingw64/include/corecrt_stdio_config.h \
- C:/msys64/mingw64/include/corecrt_wstdlib.h \
  C:/msys64/mingw64/include/corecrt_wctype.h \
  C:/msys64/mingw64/include/_mingw_off_t.h \
  C:/msys64/mingw64/include/_mingw_stat64.h \
@@ -34,7 +49,7 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/exception_defines.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/cxxabi_init_exception.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
- C:/msys64/mingw64/include/stddef.h C:/msys64/mingw64/include/crtdefs.h \
+ C:/msys64/mingw64/include/stddef.h \
  C:/msys64/mingw64/include/c++/15.2.0/typeinfo \
  C:/msys64/mingw64/include/c++/15.2.0/bits/hash_bytes.h \
  C:/msys64/mingw64/include/c++/15.2.0/new \
@@ -53,13 +68,11 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/ext/atomicity.h \
  C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/gthr.h \
  C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/gthr-default.h \
- C:/msys64/mingw64/include/pthread.h C:/msys64/mingw64/include/errno.h \
+ C:/msys64/mingw64/include/pthread.h \
  C:/msys64/mingw64/include/sys/types.h \
  C:/msys64/mingw64/include/process.h \
  C:/msys64/mingw64/include/corecrt_startup.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h \
- C:/msys64/mingw64/include/limits.h C:/msys64/mingw64/include/signal.h \
+ C:/msys64/mingw64/include/signal.h \
  C:/msys64/mingw64/include/pthread_signal.h \
  C:/msys64/mingw64/include/time.h C:/msys64/mingw64/include/sys/timeb.h \
  C:/msys64/mingw64/include/sec_api/sys/timeb_s.h \
@@ -107,13 +120,6 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/functional_hash.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/string_view.tcc \
  C:/msys64/mingw64/include/c++/15.2.0/ext/string_conversions.h \
- C:/msys64/mingw64/include/c++/15.2.0/cstdlib \
- C:/msys64/mingw64/include/stdlib.h \
- C:/msys64/mingw64/include/sec_api/stdlib_s.h \
- C:/msys64/mingw64/include/c++/15.2.0/stdlib.h \
- C:/msys64/mingw64/include/malloc.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mm_malloc.h \
- C:/msys64/mingw64/include/c++/15.2.0/bits/std_abs.h \
  C:/msys64/mingw64/include/c++/15.2.0/cstdio \
  C:/msys64/mingw64/include/c++/15.2.0/cerrno \
  C:/msys64/mingw64/include/c++/15.2.0/bits/charconv.h \
@@ -141,8 +147,6 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/15.2.0/istream \
  C:/msys64/mingw64/include/c++/15.2.0/bits/istream.tcc \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\LinearEigen.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/matrix.h \
  C:/msys64/mingw64/include/c++/15.2.0/cassert \
  C:/msys64/mingw64/include/assert.h \
  C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/matrix.cpp \
@@ -164,14 +168,6 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/tr1/poly_laguerre.tcc \
  C:/msys64/mingw64/include/c++/15.2.0/tr1/riemann_zeta.tcc \
  C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/vector.cpp \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\LinearLS.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\IterativeEigen.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\IterativeLS.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\Poly.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\PolyBasis.h \
- C:/msys64/mingw64/include/gsl/gsl_poly.h \
- C:/msys64/mingw64/include/gsl/gsl_inline.h \
- C:/msys64/mingw64/include/gsl/gsl_complex.h \
  C:/msys64/mingw64/include/c++/15.2.0/complex \
  C:/msys64/mingw64/include/c++/15.2.0/sstream \
  C:/msys64/mingw64/include/c++/15.2.0/bits/sstream.tcc \
@@ -179,10 +175,4 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/stl_bvector.h \
- C:/msys64/mingw64/include/c++/15.2.0/bits/vector.tcc \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/TestHarness.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/Test.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/SimpleString.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/TestResult.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/Failure.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/TestRegistry.h
+ C:/msys64/mingw64/include/c++/15.2.0/bits/vector.tcc

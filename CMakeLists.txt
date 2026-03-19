@@ -1,24 +1,29 @@
 cmake_minimum_required(VERSION 3.10)
 project(TriangulationTest)
 
-# 1. C++ Standard
+# 1. C++ Standard (Required for structured bindings auto [u, v])
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 2. Include Directories
-# Tells the compiler to look in the current folder and the CppUnitLite folder for .h files
+# 2. Find External Packages
+# This looks for the GSL library files and headers
+find_package(GSL REQUIRED)
+
+# 3. Include Directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/CppUnitLite)
+# Add GSL headers to the include path
+include_directories(${GSL_INCLUDE_DIRS})
 
-# 3. Source Files
-# We list your logic files, your test main, and the CppUnitLite implementation files
-# Note: Ensure the paths to CppUnitLite files match your folder structure exactly
+# 4. Source Files
 set(SOURCE_FILES
     main.cpp
     LinearEigen.cpp
     LinearLS.cpp
     IterativeEigen.cpp
     IterativeLS.cpp
+    Poly.cpp
+    PolyBasis.cpp
     CppUnitLite/Test.cpp
     CppUnitLite/TestResult.cpp
     CppUnitLite/TestRegistry.cpp
@@ -26,12 +31,13 @@ set(SOURCE_FILES
     CppUnitLite/SimpleString.cpp  
 )
 
-# 4. Define the Executable
+# 5. Define the Executable
 add_executable(triangulation_runner ${SOURCE_FILES})
 
-# 5. Link Libraries
-# CppUnitLite is header/source based, so it usually doesn't need external linking
-# unless your system requires specific math or threading libraries.
+# 6. Link Libraries
+# We link GSL and its required CBLAS component
+target_link_libraries(triangulation_runner PRIVATE GSL::gsl GSL::gslcblas)
+
 if(UNIX)
-    target_link_libraries(triangulation_runner m)
+    target_link_libraries(triangulation_runner PRIVATE m)
 endif()

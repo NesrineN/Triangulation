@@ -146,11 +146,41 @@ CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.s"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\IterativeLS.cpp -o CMakeFiles\triangulation_runner.dir\IterativeLS.cpp.s
 
+CMakeFiles/triangulation_runner.dir/Poly.cpp.obj: CMakeFiles/triangulation_runner.dir/flags.make
+CMakeFiles/triangulation_runner.dir/Poly.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
+CMakeFiles/triangulation_runner.dir/Poly.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/Poly.cpp
+CMakeFiles/triangulation_runner.dir/Poly.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/triangulation_runner.dir/Poly.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/Poly.cpp.obj -MF CMakeFiles\triangulation_runner.dir\Poly.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\Poly.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\Poly.cpp
+
+CMakeFiles/triangulation_runner.dir/Poly.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/triangulation_runner.dir/Poly.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\Poly.cpp > CMakeFiles\triangulation_runner.dir\Poly.cpp.i
+
+CMakeFiles/triangulation_runner.dir/Poly.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/triangulation_runner.dir/Poly.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\Poly.cpp -o CMakeFiles\triangulation_runner.dir\Poly.cpp.s
+
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj: CMakeFiles/triangulation_runner.dir/flags.make
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/PolyBasis.cpp
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj -MF CMakeFiles\triangulation_runner.dir\PolyBasis.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\PolyBasis.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\PolyBasis.cpp
+
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\PolyBasis.cpp > CMakeFiles\triangulation_runner.dir\PolyBasis.cpp.i
+
+CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\PolyBasis.cpp -o CMakeFiles\triangulation_runner.dir\PolyBasis.cpp.s
+
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj: CMakeFiles/triangulation_runner.dir/flags.make
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/CppUnitLite/Test.cpp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj -MF CMakeFiles\triangulation_runner.dir\CppUnitLite\Test.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\CppUnitLite\Test.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite\Test.cpp
 
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.i: cmake_force
@@ -165,7 +195,7 @@ CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj: CMakeFiles/t
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/CppUnitLite/TestResult.cpp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj -MF CMakeFiles\triangulation_runner.dir\CppUnitLite\TestResult.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\CppUnitLite\TestResult.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite\TestResult.cpp
 
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.i: cmake_force
@@ -180,7 +210,7 @@ CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj: CMakeFiles
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/CppUnitLite/TestRegistry.cpp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj -MF CMakeFiles\triangulation_runner.dir\CppUnitLite\TestRegistry.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\CppUnitLite\TestRegistry.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite\TestRegistry.cpp
 
 CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.i: cmake_force
@@ -195,7 +225,7 @@ CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj: CMakeFiles/tria
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/CppUnitLite/Failure.cpp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj -MF CMakeFiles\triangulation_runner.dir\CppUnitLite\Failure.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\CppUnitLite\Failure.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite\Failure.cpp
 
 CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.i: cmake_force
@@ -210,7 +240,7 @@ CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj: CMakeFiles
 CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj: CMakeFiles/triangulation_runner.dir/includes_CXX.rsp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj: C:/Users/USER/Desktop/Sorbonne/Internship/material/Implementations/HS_paper/CppUnitLite/SimpleString.cpp
 CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj: CMakeFiles/triangulation_runner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj -MF CMakeFiles\triangulation_runner.dir\CppUnitLite\SimpleString.cpp.obj.d -o CMakeFiles\triangulation_runner.dir\CppUnitLite\SimpleString.cpp.obj -c C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite\SimpleString.cpp
 
 CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.i: cmake_force
@@ -228,6 +258,8 @@ triangulation_runner_OBJECTS = \
 "CMakeFiles/triangulation_runner.dir/LinearLS.cpp.obj" \
 "CMakeFiles/triangulation_runner.dir/IterativeEigen.cpp.obj" \
 "CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.obj" \
+"CMakeFiles/triangulation_runner.dir/Poly.cpp.obj" \
+"CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj" \
 "CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj" \
 "CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj" \
 "CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj" \
@@ -242,16 +274,20 @@ triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/LinearEigen.cpp.ob
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/LinearLS.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/IterativeEigen.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.obj
+triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/Poly.cpp.obj
+triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/CppUnitLite/Test.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/CppUnitLite/Failure.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/CppUnitLite/SimpleString.cpp.obj
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/build.make
+triangulation_runner.exe: C:/msys64/mingw64/lib/libgsl.dll.a
+triangulation_runner.exe: C:/msys64/mingw64/lib/libgslcblas.dll.a
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/linkLibs.rsp
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/objects1.rsp
 triangulation_runner.exe: CMakeFiles/triangulation_runner.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable triangulation_runner.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable triangulation_runner.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\triangulation_runner.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -1,5 +1,6 @@
-CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\main.cpp \
+CMakeFiles/triangulation_runner.dir/Poly.cpp.obj: \
+ C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\Poly.cpp \
+ C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/matrix.h \
  C:/msys64/mingw64/include/c++/15.2.0/iostream \
  C:/msys64/mingw64/include/c++/15.2.0/bits/requires_hosted.h \
  C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -141,8 +142,6 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/15.2.0/istream \
  C:/msys64/mingw64/include/c++/15.2.0/bits/istream.tcc \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\LinearEigen.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/matrix.h \
  C:/msys64/mingw64/include/c++/15.2.0/cassert \
  C:/msys64/mingw64/include/assert.h \
  C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/matrix.cpp \
@@ -164,10 +163,7 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/tr1/poly_laguerre.tcc \
  C:/msys64/mingw64/include/c++/15.2.0/tr1/riemann_zeta.tcc \
  C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\libOrsa/libNumerics/vector.cpp \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\LinearLS.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\IterativeEigen.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\IterativeLS.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\Poly.h \
+ C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\LinearEigen.h \
  C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\PolyBasis.h \
  C:/msys64/mingw64/include/gsl/gsl_poly.h \
  C:/msys64/mingw64/include/gsl/gsl_inline.h \
@@ -179,10 +175,4 @@ CMakeFiles/triangulation_runner.dir/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.2.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/15.2.0/bits/stl_bvector.h \
- C:/msys64/mingw64/include/c++/15.2.0/bits/vector.tcc \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/TestHarness.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/Test.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/SimpleString.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/TestResult.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/Failure.h \
- C:\Users\USER\Desktop\Sorbonne\Internship\material\Implementations\HS_paper\CppUnitLite/TestRegistry.h
+ C:/msys64/mingw64/include/c++/15.2.0/bits/vector.tcc

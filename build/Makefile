@@ -344,6 +344,54 @@ LinearLS.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/LinearLS.cpp.s
 .PHONY : LinearLS.cpp.s
 
+Poly.obj: Poly.cpp.obj
+.PHONY : Poly.obj
+
+# target to build an object file
+Poly.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Poly.cpp.obj
+.PHONY : Poly.cpp.obj
+
+Poly.i: Poly.cpp.i
+.PHONY : Poly.i
+
+# target to preprocess a source file
+Poly.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Poly.cpp.i
+.PHONY : Poly.cpp.i
+
+Poly.s: Poly.cpp.s
+.PHONY : Poly.s
+
+# target to generate assembly for a file
+Poly.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Poly.cpp.s
+.PHONY : Poly.cpp.s
+
+PolyBasis.obj: PolyBasis.cpp.obj
+.PHONY : PolyBasis.obj
+
+# target to build an object file
+PolyBasis.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj
+.PHONY : PolyBasis.cpp.obj
+
+PolyBasis.i: PolyBasis.cpp.i
+.PHONY : PolyBasis.i
+
+# target to preprocess a source file
+PolyBasis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.i
+.PHONY : PolyBasis.cpp.i
+
+PolyBasis.s: PolyBasis.cpp.s
+.PHONY : PolyBasis.s
+
+# target to generate assembly for a file
+PolyBasis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.s
+.PHONY : PolyBasis.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -404,6 +452,12 @@ help:
 	@echo ... LinearLS.obj
 	@echo ... LinearLS.i
 	@echo ... LinearLS.s
+	@echo ... Poly.obj
+	@echo ... Poly.i
+	@echo ... Poly.s
+	@echo ... PolyBasis.obj
+	@echo ... PolyBasis.i
+	@echo ... PolyBasis.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

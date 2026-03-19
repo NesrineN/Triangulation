@@ -5,6 +5,7 @@
 #include "LinearLS.h"
 #include "IterativeEigen.h"
 #include "IterativeLS.h"
+#include "Poly.h"
 
 #include "libOrsa/libNumerics/matrix.h"
 #include "CppUnitLite/TestHarness.h"
@@ -47,35 +48,6 @@ std::tuple<Mat, Mat, Mat, Mat, Mat, Vec, Vec> HorizontalConfiguration(){
 	return std::make_tuple(P0, P1, K, Rl, Rr, Tl, Tr);
 }
 
-// std::pair<Mat, Mat> HorizontalConfiguration()
-// {   
-//     // P0 and P1 are originally identity matrices with an extra column 
-// 	Mat P0L = Mat::eye(3); // Rl=Identity
-// 	Mat P1L = Mat::eye(3); // Rr=Identity
-
-//     Mat Rl=P0L;
-//     Mat Rr=P1L;
-
-//     vec P0R(0,0,0); // tl=0
-//     vec Tl=P0R;
-//     vec P1R(-1000,0,0); // tr=[-1000,0,0]
-//     vec Tr=P1R;
-
-//     Mat P0=libNumerics::cat(P0L, P0R);
-//     Mat P1=libNumerics::cat(P1L, P1R);
-
-//     // Kl=Kr 
-// 	Mat K = Mat::eye(3);
-// 	K(0, 0) = 7291.67;
-// 	K(1, 1) = 7291.67;
-// 	K(0, 2) = 639.5;
-// 	K(1, 2) = 511.5;
-
-// 	P0 = K * P0;
-// 	P1 = K * P1;
-// 	return std::make_pair(P0, P1);
-// }
-
 // in here, we evaluate the error (distance) which is the norm of the result we obtained (X obtained) - expected result (X ground truth)
 // ideally, the error should be zero but we allow a tolerance of 1% deviation away from the actual distance of the X ground truth
 double CalculateError(const Vec& result, const Vec& expected_result)
@@ -88,11 +60,6 @@ TEST(LinearEigenTest, HorizontalStereo)
     Vec Tl(3);
     Vec Tr(3);
     std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
-    // std::pair<Mat,Mat> Ps=HorizontalConfiguration();
-    // Mat P0=Ps.first;
-    // Mat P1=Ps.second;
-
-    // (1004.0835, 511.5), (274.9165, 511.5)
 
     Vec U(2097.834, 511.500);
     Vec U_prime(639.500, 511.500);
@@ -117,12 +84,6 @@ TEST(LinearLSTest, HorizontalStereo)
     Vec Tr(3);
     std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
 
-    // std::pair<Mat,Mat> Ps=HorizontalConfiguration();
-    // Mat P0=Ps.first;
-    // Mat P1=Ps.second;
-
-    // (1004.0835, 511.5), (274.9165, 511.5)
-
     Vec U(2097.834, 511.500);
     Vec U_prime(639.500, 511.500);
     
@@ -145,9 +106,6 @@ TEST(IterativeEigenTest, HorizontalStereo)
     Vec Tl(3);
     Vec Tr(3);
     std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
-    // std::pair<Mat,Mat> Ps=HorizontalConfiguration();
-    // Mat P0=Ps.first;
-    // Mat P1=Ps.second;
 
     Vec U(2097.834, 511.500);
     Vec U_prime(639.500, 511.500);
@@ -172,9 +130,6 @@ TEST(IterativeLSTest, HorizontalStereo)
     Vec Tr(3);
     std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
 
-    // std::pair<Mat,Mat> Ps=HorizontalConfiguration();
-    // Mat P0=Ps.first;
-    // Mat P1=Ps.second;
 
     Vec U(2097.834, 511.500);
     Vec U_prime(639.500, 511.500);
@@ -192,6 +147,11 @@ TEST(IterativeLSTest, HorizontalStereo)
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
+// In the horizontal setup, the epipoles are at infinity (since the cameras are parallel).
+// The points u and u' have the exact same y-coord. the cost to minimize is already zero. 
+// c6 coeff of the poly becomes 0 because the matrix F is missing the rank needed to generate a 6th-degree poly.
+// sol: modify the degree of the poly from 6 to the actual degree depending on the non-zero coeff we ended up with 
+
 TEST(PolyTest, HorizontalStereo)
 {
     Mat P0, P1, K, Rl, Rr;
@@ -199,14 +159,11 @@ TEST(PolyTest, HorizontalStereo)
     Vec Tr(3);
     std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
 
-    // std::pair<Mat,Mat> Ps=HorizontalConfiguration();
-    // Mat P0=Ps.first;
-    // Mat P1=Ps.second;
-
     Vec U(2097.834, 511.500);
     Vec U_prime(639.500, 511.500);
     
-    Vec result = Triangulation::Triangulate_Iterative_LS(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
+    
+    Vec result = Triangulation::Triangulate_Poly(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
 
     Vec expected_result(1000.0, 0.0, 5000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
 	// distance should be = 0 with +- tolerance allowed
