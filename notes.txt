@@ -1,0 +1,128 @@
+structures and libraries and functions needed:
+
+-gsl_poly.h for solving polynomials:
+// int i;
+/* coefficients of P(x) =  -1 + x^5  */
+
+// double a[6] = { -1, 0, 0, 0, 0, 1 }; a[0] constant, a[1] is coeff of x , a[2] coeff of x^2 etc
+// double z[10]; 10 spaces in the result because 5 roots can be complex: real and imaginary parts
+
+// gsl_poly_complex_workspace * w = gsl_poly_complex_workspace_alloc (6); reserves space in workspace for a polynomial with 6 coefficients.
+
+// gsl_poly_complex_solve (a, 6, w, z); iterative algorithm (likely the Balanced QR algorithm). 6 is the number of coefficients. results of roots are in z
+
+// gsl_poly_complex_workspace_free (w);
+
+// for (i = 0; i < 5; i++)
+// {
+//     printf ("z%d = %+.18f %+.18f\n",
+//             i, z[2*i], z[2*i+1]);
+// }
+// z[2*i] is real part and z[2*i+1] is imaginary
+
+-OpenCV!!!! it has:
+
+-cv::Point3d : object representing a 3D point having coords (x,y,z). 
+To create one:
+cv::Point3d(1.2, 5.5, 10.1); OR
+cv::Point3d myPoint(10.5, 20.0, 100.2);
+To access: 
+double X = myPoint.x;
+List of 3d points:
+std::vector<cv::Point3d> worldPoints;
+worldPoints.push_back(cv::Point3d(1.2, 5.5, 10.1));
+Loop through all points
+for(const auto& pt : worldPoints) {
+    std::cout << "Point: " << pt.x << ", " << pt.y << ", " << pt.z << std::endl;
+}
+
+-cv::Point2d
+
+-cv::Mat : Matrix 
+-Creating a Matrix: 
+-cv::Mat P = cv::Mat::zeros(3, 4, CV_64F);
+Or create a matrix and fill it manually
+-cv::Mat K = (cv::Mat_<double>(3,3) << 800, 0, 320, 
+                                      0, 800, 240, 
+                                      0,   0,   1);
+-Get the focal length from row 0, column 0:
+double fx = K.at<double>(0, 0); row,column
+solution.at<double>(i); accesses the ith element in matrix solution
+-Change a value:
+K.at<double>(0, 2) = 320.5;
+- Matrix Math:
+cv::Mat A, B;
+cv::Mat C = A * B;          // Matrix multiplication
+cv::Mat D = A.t();          // Transpose
+cv::Mat E = A.inv();        // Inverse
+
+-cv::Vec3d, cv::Vec2d
+
+-std::complex<double> for the roots
+
+
+In many stereo vision setups, the first camera is at the origin ($P0 = K[I|0]$) and the second camera ($P1$) is shifted and rotated
+cv::Mat K, R, t_hom;
+cv::Mat rotX, rotY, rotZ, eulerAngles;
+cv::decomposeProjectionMatrix(P, K, R, t_hom, rotX, rotY, rotZ, eulerAngles);
+
+-cv::Mat::eye(3, 3, CV_64F); --> generates an identity matrix 3x3 (1s on diagonal 0 everywhere else) CV_64F --> doubles
+
+-cv::SVD::compute(F.t(), W, U, VT); --> performing SVD of F matrix and returning U, W, and V already transposed
+Why Transpose F? In Hartley and Sturm's "Optimal Triangulation," they need to find the Epipoles.The left epipole e_1 is the null space of $F$ ($F e_1 = 0$).The right epipole $e_2$ is the null space of $F^T$ ($F^T e_2 = 0$).By computing the SVD of $F^T$, the last column of the matrix $V$ (or the last row of $VT$) gives you the vector that most closely satisfies the equation $F^T x = 0$. This is the standard way to find the epipole in the image.
+W: A $3 \times 1$ matrix (the three singular values).U: A $3 \times 3$ orthogonal matrix.VT: A $3 \times 3$ orthogonal matrix.
+cv::Mat epipole = VT.row(2);
+
+-cv::SVD::solveZ(F.t(), e2); 
+designed to find the unit vector $x$ that is the "best" solution to the homogeneous linear system $Ax = 0$.
+The "Z" stands for Zero. In many computer vision problems, you aren't trying to solve $Ax = b$ (where $b$ is some value), but rather $Ax = 0$.
+In your case, cv::SVD::solveZ(F.t(), e2); is calculating the right epipole $e_2$ of the Fundamental Matrix $F$.
+
+1. How to Define a Namespace
+You wrap your code in a namespace block.
+namespace MyProject {
+    void solve() {
+        // Your triangulation logic
+    }
+}
+2. How to Use Namespaces
+int main() {
+    MyProject::solve(); // Specifically calls YOUR solve
+    cv::solve();        // Specifically calls OpenCV's solve
+}
+
+!!!!!!!!! Vecs are treated as columns !!!!!!!!!!!
+If your math equation requires the vector to be a row (horizontal), you have to explicitly tell OpenCV to treat it as a matrix and then transpose it.
+However, cv::Vec is a "template," and you cannot directly call .t() on it like a matrix. You usually convert it to a cv::Mat first:
+cv::Vec3d v(1, 2, 3); // it's 3x1
+cv::Mat rowVec = cv::Mat(v).t(); // Now it is 1x3
+
+It is a very common shortcut in triangulation (especially in the Hartley-Sturm paper) to define the first camera as the center of the universe.
+For Camera 1: P = K [I | 0]
+For Camera 2: P' = K' [R | t]
+
+
+
+
+
+
+Coefficient,Algebraic Expression
+c6​,−f4(ad−bc)ac
+c5​,(a2+f2c2)2−f4(ad−bc)(ad+bc)
+c4​,4(a2+f2c2)(ab+f2cd)−2f2(ad−bc)ac
+c3​,2(a2+f2c2)(b2+f2d2)+4(ab+f2cd)2−2f2(ad−bc)(ad+bc)
+c2​,4(b2+f2d2)(ab+f2cd)−(ad−bc)ac
+c1​,(b2+f2d2)2−(ad−bc)(ad+bc)
+c0​,−(ad−bc)bd
+
+
+
+
+# Configure
+cmake -G "MinGW Makefiles" -B build -DCMAKE_CXX_COMPILER="C:/msys64/mingw64/bin/g++.exe"
+
+# Build
+cmake --build build
+
+# Run
+.\build\triangulation_runner.exe
