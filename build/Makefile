@@ -368,6 +368,30 @@ Poly.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Poly.cpp.s
 .PHONY : Poly.cpp.s
 
+PolyAbs.obj: PolyAbs.cpp.obj
+.PHONY : PolyAbs.obj
+
+# target to build an object file
+PolyAbs.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/PolyAbs.cpp.obj
+.PHONY : PolyAbs.cpp.obj
+
+PolyAbs.i: PolyAbs.cpp.i
+.PHONY : PolyAbs.i
+
+# target to preprocess a source file
+PolyAbs.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/PolyAbs.cpp.i
+.PHONY : PolyAbs.cpp.i
+
+PolyAbs.s: PolyAbs.cpp.s
+.PHONY : PolyAbs.s
+
+# target to generate assembly for a file
+PolyAbs.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/PolyAbs.cpp.s
+.PHONY : PolyAbs.cpp.s
+
 PolyBasis.obj: PolyBasis.cpp.obj
 .PHONY : PolyBasis.obj
 
@@ -455,6 +479,9 @@ help:
 	@echo ... Poly.obj
 	@echo ... Poly.i
 	@echo ... Poly.s
+	@echo ... PolyAbs.obj
+	@echo ... PolyAbs.i
+	@echo ... PolyAbs.s
 	@echo ... PolyBasis.obj
 	@echo ... PolyBasis.i
 	@echo ... PolyBasis.s

@@ -6,6 +6,7 @@
 #include "IterativeEigen.h"
 #include "IterativeLS.h"
 #include "Poly.h"
+#include "PolyAbs.h"
 
 #include "libOrsa/libNumerics/matrix.h"
 #include "CppUnitLite/TestHarness.h"
@@ -164,6 +165,30 @@ TEST(PolyTest, HorizontalStereo)
     
     
     Vec result = Triangulation::Triangulate_Poly(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
+
+    Vec expected_result(1000.0, 0.0, 5000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
+	// distance should be = 0 with +- tolerance allowed
+    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
+    
+    double max_percentage_error = 0.001;
+    double tolerance = expected_result.qnorm() * max_percentage_error;
+    double error= CalculateError(result, expected_result);
+
+    DOUBLES_EQUAL(0.0, error, tolerance);
+}
+
+TEST(PolyAbsTest, HorizontalStereo)
+{
+    Mat P0, P1, K, Rl, Rr;
+    Vec Tl(3);
+    Vec Tr(3);
+    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
+
+    Vec U(2097.834, 511.500);
+    Vec U_prime(639.500, 511.500);
+    
+    
+    Vec result = Triangulation::Triangulate_Poly_Abs(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
 
     Vec expected_result(1000.0, 0.0, 5000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
 	// distance should be = 0 with +- tolerance allowed

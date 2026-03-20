@@ -1,58 +1,45 @@
 #ifndef POLY_BASIS_H
 #define POLY_BASIS_H
 
-#include <gsl/gsl_poly.h>
 #include "libOrsa/libNumerics/matrix.h"
-#include <iostream>
-#include <complex>
 #include <vector>
+#include <utility>
 
-// Type Aliases for brevity
+// Typedefs for convenience within the Poly namespace
 typedef libNumerics::matrix<double> Mat;
 typedef libNumerics::vector<double> Vec;
 
-namespace Poly
-{
-    /**
-     * Core Function: Takes measured points u, u' and fundamental matrix F,
-     * returns the "optimal" points u_hat and u_prime_hat that satisfy the
-     * epipolar constraint perfectly while minimizing geometric distance.
-     */
-    std::pair<Vec, Vec> ComputeCorrectedPairs(const Vec& U, const Vec& U_prime, const Mat& F);
+namespace Poly {
 
-    // --- Geometric Transformation Helpers ---
-    
+    // --- Transformation Utilities ---
     Mat TranslationMatrixToOrigin(const Vec& U);
-    
     Mat RotationMatrixToX(const Vec& e);
-    
-    Mat ComputeFundamentalMatrix(const Mat& K, const Mat& Rl, const Mat& Rr, const Vec& Tl, const Vec& Tr);
-    
-    Mat TransformFundamentalMatrix(const Mat& F, const Mat& R, const Mat& L, const Mat& R_p, const Mat& L_p);
 
-    // --- Epipolar Geometry Helpers ---
-    
+    // --- Fundamental Matrix Logic ---
+    Mat ComputeFundamentalMatrix(const Mat& K, const Mat& Rl, const Mat& Rr, const Vec& Tl, const Vec& Tr);
+    Mat TransformFundamentalMatrix(const Mat& F, const Mat& R, const Mat& L, const Mat& R_p, const Mat L_p);
     Vec ComputeRightEpipole(const Mat& F);
-    
     Vec ComputeLeftEpipole(const Mat& F);
 
-    // --- Polynomial & Optimization Logic ---
-    
-    std::vector<double> SolvePoly(double a, double b, double c, double d, double f, double f_p);
-    
-    double EvaluateEquation(const double& t, double a, double b, double c, double d, double f, double f_p);
-    
-    double FindBestRoot(const std::vector<double>& roots, double a, double b, double c, double d, double f, double f_p);
+    // --- Polynomial Solvers ---
+    std::vector<double> SolvePoly(const double a, const double b, const double c, const double d, const double f, const double f_p);
+    std::vector<double> SolvePolyAbs(const double a, const double b, const double c, const double d, const double f, const double f_p);
 
-    // --- Line and Point Construction ---
-    
+    // --- Evaluation and Root Selection ---
+    double EvaluateEquation(const double& t, const double a, const double b, const double c, const double d, const double f, const double f_p);
+    double EvaluateEquationAbs(const double& t, const double a, const double b, const double c, const double d, const double f, const double f_p);
+    double FindBestRoot(const std::vector<double>& roots, const double a, const double b, const double c, const double d, const double f, const double f_p);
+    double FindBestRootAbs(const std::vector<double>& roots, const double a, const double b, const double c, const double d, const double f, const double f_p);
+
+    // --- Back-Projection and Finalization ---
     Vec ComputeLeftEpipolarLine(const double& best_root, const double& f);
-    
-    Vec ComputeRightEpipolarLine(const double& best_root, double a, double b, double c, double d, double f_p);
-    
+    Vec ComputeRightEpipolarLine(const double& best_root, const double& a, const double& b, const double& c, const double& d, const double& f_p);
     Vec FindClosestPointToOrigin(const Vec& lambda);
-    
     Vec BackTransform(const Mat& R, const Mat& L, const Vec& U_hat);
+
+    // --- Top Level API ---
+    std::pair<Vec, Vec> ComputeCorrectedPairs(const Vec& U, const Vec& U_prime, const Mat& F);
+    std::pair<Vec, Vec> ComputeCorrectedPairsAbs(const Vec& U, const Vec& U_prime, const Mat& F);
 
 } // namespace Poly
 

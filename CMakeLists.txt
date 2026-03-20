@@ -23,6 +23,7 @@ set(SOURCE_FILES
     IterativeEigen.cpp
     IterativeLS.cpp
     Poly.cpp
+    PolyAbs.cpp
     PolyBasis.cpp
     CppUnitLite/Test.cpp
     CppUnitLite/TestResult.cpp

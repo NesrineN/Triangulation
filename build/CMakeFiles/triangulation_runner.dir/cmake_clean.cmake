@@ -19,6 +19,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/triangulation_runner.dir/LinearLS.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/Poly.cpp.obj"
   "CMakeFiles/triangulation_runner.dir/Poly.cpp.obj.d"
+  "CMakeFiles/triangulation_runner.dir/PolyAbs.cpp.obj"
+  "CMakeFiles/triangulation_runner.dir/PolyAbs.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj"
   "CMakeFiles/triangulation_runner.dir/PolyBasis.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/main.cpp.obj"

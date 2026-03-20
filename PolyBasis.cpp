@@ -3,6 +3,7 @@
 #include <iostream> 
 #include <complex>
 #include <vector>
+#include <cmath>
 
 typedef libNumerics::matrix<double> Mat;
 typedef libNumerics::vector<double> Vec;
@@ -156,12 +157,107 @@ namespace Poly
         return z;
     }
 
+    // this function is to solve the 8 degree polynomial obtained in the Poly-Abs method where we minimize the absolute value of the distance from u and u' to lambda and lambda prime instead of the squared distance
+    std::vector<double> SolvePolyAbs(const double a, const double b, const double c, const double d, const double f, const double f_p){
+
+
+        double alpha=a*a+f_p*f_p*c*c;
+        double beta=2*(a*b+f_p*f_p*c*d);
+        double gamma= (b*b)+(f_p*f_p*d*d);
+        
+        double coeff8=(alpha*alpha*alpha)-((a*d)-(b*c))*((a*d)-(b*c))*a*a*std::pow(f,6);
+        double coeff7=3*alpha*alpha*beta-2*a*b*((a*d)-(b*c))*((a*d)-(b*c))*std::pow(f,6);
+        double coeff6=3*alpha*alpha*gamma+ 3*alpha*beta*beta-((a*d)-(b*c))*((a*d)-(b*c))*(a*a + 3*a*a*f*f+ b*b*std::pow(f,6));
+        double coeff5=6*alpha*beta*gamma+beta*beta*beta-((a*d)-(b*c))*((a*d)-(b*c))*(2*a*b+6*a*b*f*f);
+        double coeff4=3*alpha*gamma*gamma+3*beta*beta*gamma-((a*d)-(b*c))*((a*d)-(b*c))*(b*b+3*b*b*f*f+3*a*a*std::pow(f,4));
+        double coeff3=3*beta*gamma*gamma-((a*d)-(b*c))*((a*d)-(b*c))*(6*a*b*f*f+6*a*b*std::pow(f,4));
+        double coeff2=3*gamma*gamma*alpha-((a*d)-(b*c))*((a*d)-(b*c))*(3*b*b*f*f+3*a*a*std::pow(f,4));
+        double coeff1=3*gamma*gamma*beta-((a*d)-(b*c))*((a*d)-(b*c))*(2*a*b*f*f+2*a*b*std::pow(f,4));
+        double coeff0=gamma*gamma*gamma-((a*d)-(b*c))*((a*d)-(b*c))*b*b;
+
+
+        // double a2=a*a;
+        // double a3=a*a*a;
+        // double a4=a2*a2;
+        // double a5=a4*a;
+        // double a6=a3*a3;
+
+        // double b2 = b*b;
+        // double b3= b*b*b;
+        // double b4= b*b*b*b;
+        // double b5= b4*b;
+        // double b6=b5*b;
+
+        // double c2=c*c;
+        // double c3=c2*c;
+        // double c4=c2*c2;
+        // double c5=c4*c;
+        // double c6=c4*c2;
+        
+        // double fp2=f_p*f_p;
+        // double fp3=fp2*f_p;
+        // double fp4= fp2*fp2;
+        // double fp5=fp3*fp2;
+        // double fp6=fp4*fp2;
+
+        // double d2=d*d;
+        // double d3=d2*d;
+        // double d4= d2*d2;
+        // double d5=d4*d;
+        // double d6=d4*d*d;
+
+        // double f2=f*f;
+        // double f3=f2*f;
+        // double f4=f2*f2;
+        // double f5=f4*f;
+        // double f6=f3*f3;
+
+        // double coeff8 = a2*f6*(-a2*d2 + 2*a*b*c*d - b2*c2);
+        // double coeff7 = 2*a*b*f6*(-a2*d2 + 2*a*b*c*d - b2*c2);
+        // double coeff6 = a6 + (3*a4*c2*fp2) - (3*a4*d2*f4) + (6*a3*b*c*d*f4) - (3*a2*b2*c2*f4) - (a2*b2*d2*f6) + (3*a2*c4*fp4) + (2*a*b3*c*d*f6) - (b4*c2*f6) + (c6*fp6);
+        // double coeff5 = 6*a5*b + 6*a4*c*d*fp2 + 12*a3*b*c2*fp2 - 6*a3*b*d2*f4 + 12*a2*b2*c*d*f4 + 12*a2*c3*d*fp4 - 6*a*b3*c2*f4 + 6*a*b*c4*fp4 + 6*c5*d*fp6;
+        // double coeff4 = 15*a4*b2 - 3*a4*d2*f2 + 3*a4*d2*fp2 + 6*a3*b*c*d*f2 + 24*a3*b*c*d*fp2 - 3*a2*b2*c2*f2 + 18*a2*b2*c2*fp2 - 3*a2*b2*d2*f4 + 18*a2*c2*d2*fp4 + 6*a*b3*c*d*f4 + 24*a*b*c3*d*fp4 - 3*b4*c2*f4 + 3*b2*c4*fp4 + 15*c4*d2*fp6 ;
+        // double coeff3 = 20*a3*b3 - 6*a3*b*d2*f2 + 12*a3*b*d2*fp2 + 12*a2*b2*c*d*f2 + 36*a2*b2*c*d*fp2 + 12*a2*c*d3*fp4 - 6*a*b3*c2*f2 + 12*a*b3*c2*fp2 + 36*a*b*c2*d2*fp4 + 12*b2*c3*d*fp4 + 20*c3*d3*fp6 ;
+        // double coeff2 = -a4*d2 + 2*a3*b*c*d + 15*a2*b4 - a2*b2*c2 - 3*a2*b2*d2*f2 + 18*a2*b2*d2*fp2 + 3*a2*d4*fp4 + 6*a*b3*c*d*f2 + 24*a*b3*c*d*fp2 + 24*a*b*c*d3*fp4 - 3*b4*c2*f2 + 3*b4*c2*fp2 + 18*b2*c2*d2*fp4 + 15*c2*d4*fp6;
+        // double coeff1 = -2*a3*b*d2 + 4*a2*b2*c*d + 6*a*b5 - 2*a*b3*c2 + 12*a*b3*d2*fp2 + 6*a*b*d4*fp4 + 6*b4*c*d*fp2 + 12*b2*c*d3*fp4 + 6*c*d5*fp6;
+        // double coeff0 = -a2*b2*d2 + 2*a*b3*c*d + b6 - b4*c2 + 3*b4*d2*fp2 + 3*b2*d4*fp4 + d6*fp6;
+
+        double coeffs[9] = { coeff0, coeff1, coeff2, coeff3, coeff4, coeff5, coeff6, coeff7, coeff8 };
+
+        int actual_degree = 8;
+        while (actual_degree > 0 && std::abs(coeffs[actual_degree]) < 1e-15) {
+            actual_degree--;
+        }
+
+        std::vector<double> z(16);
+        gsl_poly_complex_workspace * w = gsl_poly_complex_workspace_alloc (actual_degree+1);
+        gsl_poly_complex_solve (coeffs, actual_degree+1, w, z.data());
+        gsl_poly_complex_workspace_free (w);
+
+        return z;
+    }
+
     // function that evaluates the equation s(t) given a t parameter
     double EvaluateEquation(const double& t, const double a, const double b, const double c, const double d, const double f, const double f_p){
         double term1= (t*t) / (1+((t*f)*(t*f)));
 
         double term2_num= ((c*t)+d)*((c*t)+d);
         double term2_denom=((a*t)+b)*((a*t)+b) + (f_p * f_p)*term2_num;
+        if (std::abs(term2_denom) < 1e-20) return term1;
+
+        return (term1+(term2_num/term2_denom));
+    }
+
+    double EvaluateEquationAbs(const double& t, const double a, const double b, const double c, const double d, const double f, const double f_p){
+        
+        if (std::sqrt((1+((t*f)*(t*f)))) < 1e-20) return 0;
+
+        double term1= std::abs(t) / std::sqrt((1+((t*f)*(t*f))));
+
+        double term2_num= std::abs(((c*t)+d));
+        double term2_denom=((a*t)+b)*((a*t)+b) + (f_p * f_p)*((c*t)+d)*((c*t)+d);
+        term2_denom=std::sqrt(term2_denom);
+
         if (std::abs(term2_denom) < 1e-20) return term1;
 
         return (term1+(term2_num/term2_denom));
@@ -177,6 +273,23 @@ namespace Poly
             double imagPart = roots[2*i + 1];
 
             double st=EvaluateEquation(realPart, a, b, c, d, f, f_p);
+            if(st<minimum){
+                minimum=st;
+                best_root=realPart;
+            }
+        }
+
+        return best_root;
+    }
+
+    double FindBestRootAbs(const std::vector<double>& roots, const double a, const double b, const double c, const double d, const double f, const double f_p){
+        double minimum=1e99;
+        double best_root;
+        for(int i = 0; i < 8; i++) {
+            double realPart = roots[2*i];
+            double imagPart = roots[2*i + 1];
+
+            double st=EvaluateEquationAbs(realPart, a, b, c, d, f, f_p);
             if(st<minimum){
                 minimum=st;
                 best_root=realPart;
@@ -294,6 +407,53 @@ namespace Poly
         // now, we find the best root that would minimize our cost function
         std::vector<double> roots=SolvePoly(a, b, c, d, f, f_p);
         double best_root=FindBestRoot(roots, a, b, c, d, f, f_p);
+
+        // after finding t, we get the equations of the 2 epipolar lines lambda(t) and lambda(t')
+        Vec lambda=ComputeLeftEpipolarLine(best_root, f); // homogeneous coords
+        Vec lambda_p=ComputeRightEpipolarLine(best_root, a, b, c, d, f_p );
+
+        // now, we find u^ and u^' which are the points on lambda and lambda_p closest to the origin
+        Vec U_hat_old=FindClosestPointToOrigin(lambda); // 2d euclidean coords
+        Vec U_hat_p_old=FindClosestPointToOrigin(lambda_p); 
+
+        // then we reverse the rigid transformations we applied at the beginning
+        Vec U_hat=BackTransform(R, L, U_hat_old);
+        Vec U_hat_p=BackTransform(R_p, L_p, U_hat_p_old);
+
+        return std::pair<Vec, Vec>(U_hat, U_hat_p);
+    }
+
+
+    std::pair<Vec, Vec> ComputeCorrectedPairsAbs(const Vec& U, const Vec& U_prime, const Mat& F){
+        
+        // first we apply the rigid transformations to get F_transformed
+        Mat L=TranslationMatrixToOrigin(U);
+        Mat L_p=TranslationMatrixToOrigin(U_prime);
+
+        Vec LeftEpipole=ComputeLeftEpipole(F); // homogeneous coords
+        Vec RightEpipole=ComputeRightEpipole(F);
+
+        Mat R=RotationMatrixToX(LeftEpipole);
+        Mat R_p=RotationMatrixToX(RightEpipole);
+
+        Mat F_transformed=TransformFundamentalMatrix(F, R, L, R_p, L_p);
+
+        //F_transformed = 
+        // ff'd -f'c -f'd
+        // -fb    a    b
+        // -fd    c    d 
+
+        // then, we get the coefficients of F_transformed a,b,c,d,f,f_p
+        double a=F_transformed(1,1);
+        double b=F_transformed(1,2);
+        double c=F_transformed(2,1);
+        double d=F_transformed(2,2);
+        double f=-(F_transformed(1,0)/b);
+        double f_p=-(F_transformed(0,1)/c);
+
+        // now, we find the best root that would minimize our cost function
+        std::vector<double> roots=SolvePolyAbs(a, b, c, d, f, f_p);
+        double best_root=FindBestRootAbs(roots, a, b, c, d, f, f_p);
 
         // after finding t, we get the equations of the 2 epipolar lines lambda(t) and lambda(t')
         Vec lambda=ComputeLeftEpipolarLine(best_root, f); // homogeneous coords
