@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/triangulation_runner.dir/IterativeEigen.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.obj"
   "CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.obj.d"
+  "CMakeFiles/triangulation_runner.dir/Kanatani.cpp.obj"
+  "CMakeFiles/triangulation_runner.dir/Kanatani.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/LinearEigen.cpp.obj"
   "CMakeFiles/triangulation_runner.dir/LinearEigen.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/LinearLS.cpp.obj"

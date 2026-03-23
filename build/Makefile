@@ -296,6 +296,30 @@ IterativeLS.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.s
 .PHONY : IterativeLS.cpp.s
 
+Kanatani.obj: Kanatani.cpp.obj
+.PHONY : Kanatani.obj
+
+# target to build an object file
+Kanatani.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Kanatani.cpp.obj
+.PHONY : Kanatani.cpp.obj
+
+Kanatani.i: Kanatani.cpp.i
+.PHONY : Kanatani.i
+
+# target to preprocess a source file
+Kanatani.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Kanatani.cpp.i
+.PHONY : Kanatani.cpp.i
+
+Kanatani.s: Kanatani.cpp.s
+.PHONY : Kanatani.s
+
+# target to generate assembly for a file
+Kanatani.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/Kanatani.cpp.s
+.PHONY : Kanatani.cpp.s
+
 LinearEigen.obj: LinearEigen.cpp.obj
 .PHONY : LinearEigen.obj
 
@@ -470,6 +494,9 @@ help:
 	@echo ... IterativeLS.obj
 	@echo ... IterativeLS.i
 	@echo ... IterativeLS.s
+	@echo ... Kanatani.obj
+	@echo ... Kanatani.i
+	@echo ... Kanatani.s
 	@echo ... LinearEigen.obj
 	@echo ... LinearEigen.i
 	@echo ... LinearEigen.s

@@ -25,6 +25,7 @@ set(SOURCE_FILES
     Poly.cpp
     PolyAbs.cpp
     PolyBasis.cpp
+    Kanatani.cpp
     CppUnitLite/Test.cpp
     CppUnitLite/TestResult.cpp
     CppUnitLite/TestRegistry.cpp
