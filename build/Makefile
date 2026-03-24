@@ -248,6 +248,30 @@ CppUnitLite/TestResult.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.s
 .PHONY : CppUnitLite/TestResult.cpp.s
 
+HigherOrder.obj: HigherOrder.cpp.obj
+.PHONY : HigherOrder.obj
+
+# target to build an object file
+HigherOrder.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/HigherOrder.cpp.obj
+.PHONY : HigherOrder.cpp.obj
+
+HigherOrder.i: HigherOrder.cpp.i
+.PHONY : HigherOrder.i
+
+# target to preprocess a source file
+HigherOrder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/HigherOrder.cpp.i
+.PHONY : HigherOrder.cpp.i
+
+HigherOrder.s: HigherOrder.cpp.s
+.PHONY : HigherOrder.s
+
+# target to generate assembly for a file
+HigherOrder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\triangulation_runner.dir\build.make CMakeFiles/triangulation_runner.dir/HigherOrder.cpp.s
+.PHONY : HigherOrder.cpp.s
+
 IterativeEigen.obj: IterativeEigen.cpp.obj
 .PHONY : IterativeEigen.obj
 
@@ -488,6 +512,9 @@ help:
 	@echo ... CppUnitLite/TestResult.obj
 	@echo ... CppUnitLite/TestResult.i
 	@echo ... CppUnitLite/TestResult.s
+	@echo ... HigherOrder.obj
+	@echo ... HigherOrder.i
+	@echo ... HigherOrder.s
 	@echo ... IterativeEigen.obj
 	@echo ... IterativeEigen.i
 	@echo ... IterativeEigen.s

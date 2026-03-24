@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/triangulation_runner.dir/CppUnitLite/TestRegistry.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj"
   "CMakeFiles/triangulation_runner.dir/CppUnitLite/TestResult.cpp.obj.d"
+  "CMakeFiles/triangulation_runner.dir/HigherOrder.cpp.obj"
+  "CMakeFiles/triangulation_runner.dir/HigherOrder.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/IterativeEigen.cpp.obj"
   "CMakeFiles/triangulation_runner.dir/IterativeEigen.cpp.obj.d"
   "CMakeFiles/triangulation_runner.dir/IterativeLS.cpp.obj"

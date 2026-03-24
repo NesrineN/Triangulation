@@ -10,6 +10,7 @@
 #include "Poly.h"
 #include "PolyAbs.h"
 #include "Kanatani.h"
+#include "HigherOrder.h"
 
 #include "libOrsa/libNumerics/matrix.h"
 #include "CppUnitLite/TestHarness.h"
@@ -257,6 +258,25 @@ TEST(Kanatani, HorizontalStereo)
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
+TEST(HigherOrder, HorizontalStereo)
+{
+    Mat P0, P1, K, Rl, Rr;
+    Vec Tl(3);
+    Vec Tr(3);
+    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = HorizontalConfiguration();
+
+    Vec U(1004.0835, 511.5);
+    Vec U_prime(274.9165, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0);
+    
+    double error=RunTriangulationTest("Higher Order Optimal Correction - Horizontal Stereo", Triangulation::Triangulate_HigherOrder, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
+    double max_percentage_error = 0.001;
+    double tolerance = expected_result.qnorm() * max_percentage_error;
+    DOUBLES_EQUAL(0.0, error, tolerance);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
 TEST(LinearEigenTest, C2RotatedLeftStereo)
 {   Mat P0, P1, K, Rl, Rr;
     Vec Tl(3);
@@ -371,6 +391,23 @@ TEST(Kanatani, C2RotatedLeftStereo)
     Vec expected_result(500.0, 0.0, 10000.0); 
     
     double error=RunTriangulationTest("Kanatani - C2 Rotated Left Stereo", Triangulation::Triangulate_Kanatani, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
+    double max_percentage_error = 0.001;
+    double tolerance = expected_result.qnorm() * max_percentage_error;
+    DOUBLES_EQUAL(0.0, error, tolerance);
+}
+
+TEST(HigherOrder, C2RotatedLeftStereo)
+{
+    Mat P0, P1, K, Rl, Rr;
+    Vec Tl(3);
+    Vec Tr(3);
+    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
+
+    Vec U(878.821, 634.619);
+    Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
+    
+    double error=RunTriangulationTest("Higher Order Optimal Correction - C2 Rotated Left Stereo", Triangulation::Triangulate_HigherOrder, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
     DOUBLES_EQUAL(0.0, error, tolerance);
