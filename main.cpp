@@ -1,5 +1,7 @@
 #include <iostream>
 #include <tuple>
+#include <chrono>
+#include <functional>
 
 #include "LinearEigen.h"
 #include "LinearLS.h"
@@ -15,6 +17,46 @@
 
 typedef libNumerics::matrix<double> Mat;
 typedef libNumerics::vector<double> Vec;
+
+// in here, we evaluate the error (distance) which is the norm of the result we obtained (X obtained) - expected result (X ground truth)
+// ideally, the error should be zero but we allow a tolerance of 1% deviation away from the actual distance of the X ground truth
+double CalculateError(const Vec& result, const Vec& expected_result)
+{	
+    return (result - expected_result).qnorm();
+}
+
+template <typename Func, typename... Args>
+
+// A generic function to run and validate any triangulation method
+double RunTriangulationTest(
+    const std::string& testName,
+    Func triangulateFunc, 
+    const Vec& expected_result,
+    Args&&... args  
+) {
+    // 1. Timing
+    auto start = std::chrono::high_resolution_clock::now();
+    Vec result = triangulateFunc(std::forward<Args>(args)...);
+    auto end = std::chrono::high_resolution_clock::now();
+    
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    // 2. Error Calculation
+    double error = CalculateError(result, expected_result);
+    double percentage_error = error / expected_result.qnorm();
+    
+    // 3. Reporting
+    std::cout << "\n--- " << testName << " ---" << std::endl;
+    std::cout << "Execution Time: " << duration.count() << " us" << std::endl;
+    std::cout << "Reconstruction Error: " << error << std::endl;
+    std::cout << "Relative Error: " << (percentage_error * 100.0) << "%" << std::endl;
+
+    // // 4. Assertion (using a 0.1% tolerance as in your code)
+    // double max_percentage_error = 0.001;
+    // double tolerance = expected_result.qnorm() * max_percentage_error;
+    // DOUBLES_EQUAL(0.0, error, tolerance);
+    return error;
+}
 
 // We set up synthetic stereo camera systems to test our methods:
 
@@ -89,13 +131,6 @@ std::tuple<Mat, Mat, Mat, Mat, Mat, Vec, Vec> C2RotatedLeft(){
 
 }
 
-// in here, we evaluate the error (distance) which is the norm of the result we obtained (X obtained) - expected result (X ground truth)
-// ideally, the error should be zero but we allow a tolerance of 1% deviation away from the actual distance of the X ground truth
-double CalculateError(const Vec& result, const Vec& expected_result)
-{	
-    return (result - expected_result).qnorm();
-}
-
 TEST(LinearEigenTest, HorizontalStereo)
 {   Mat P0, P1, K, Rl, Rr;
     Vec Tl(3);
@@ -104,17 +139,13 @@ TEST(LinearEigenTest, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
-    
-    Vec result = Triangulation::Triangulate_Linear_Eigen(U,U_prime, P0, P1);
-
     Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
 	// distance should be = 0 with +- tolerance allowed
     // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+
+    double error=RunTriangulationTest("Linear Eigen - Horizontal Stereo", Triangulation::Triangulate_Linear_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -127,17 +158,11 @@ TEST(LinearLSTest, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    Vec result = Triangulation::Triangulate_Linear_LS(U,U_prime, P0, P1);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Linear LS - Horizontal Stereo", Triangulation::Triangulate_Linear_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -150,17 +175,11 @@ TEST(IterativeEigenTest, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
-    
-    Vec result = Triangulation::Triangulate_Iterative_Eigen(U,U_prime, P0, P1);
+    Vec expected_result(500.0, 0.0, 10000.0);  
 
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Iterative Eigen - Horizontal Stereo", Triangulation::Triangulate_Iterative_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -174,17 +193,11 @@ TEST(IterativeLSTest, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
-    
-    Vec result = Triangulation::Triangulate_Iterative_LS(U,U_prime, P0, P1);
+    Vec expected_result(500.0, 0.0, 10000.0); 
 
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Iterative LS - Horizontal Stereo", Triangulation::Triangulate_Iterative_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -202,18 +215,11 @@ TEST(PolyTest, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
-    
-    
-    Vec result = Triangulation::Triangulate_Poly(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
+    Vec expected_result(500.0, 0.0, 10000.0); 
 
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Poly - Horizontal Stereo", Triangulation::Triangulate_Poly, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -226,18 +232,11 @@ TEST(PolyAbsTest, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
-    
-    
-    Vec result = Triangulation::Triangulate_Poly_Abs(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
+    Vec expected_result(500.0, 0.0, 10000.0); 
 
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Poly-Abs - Horizontal Stereo", Triangulation::Triangulate_Poly_Abs, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -250,18 +249,11 @@ TEST(Kanatani, HorizontalStereo)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0);
     
-    
-    Vec result = Triangulation::Triangulate_Kanatani(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Kanatani - Horizontal Stereo", Triangulation::Triangulate_Kanatani, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -273,17 +265,11 @@ TEST(LinearEigenTest, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
-    
-    Vec result = Triangulation::Triangulate_Linear_Eigen(U,U_prime, P0, P1);
+    Vec expected_result(500.0, 0.0, 10000.0); 
 
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Linear Eigen - C2 Rotated Left Stereo", Triangulation::Triangulate_Linear_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -296,17 +282,11 @@ TEST(LinearLSTest, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    Vec result = Triangulation::Triangulate_Linear_LS(U,U_prime, P0, P1);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Linear LS - C2 Rotated Left Stereo", Triangulation::Triangulate_Linear_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -319,17 +299,11 @@ TEST(IterativeEigenTest, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    Vec result = Triangulation::Triangulate_Iterative_Eigen(U,U_prime, P0, P1);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Iterative Eigen - C2 Rotated Left Stereo", Triangulation::Triangulate_Iterative_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -343,24 +317,13 @@ TEST(IterativeLSTest, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    Vec result = Triangulation::Triangulate_Iterative_LS(U,U_prime, P0, P1);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Iterative LS - C2 Rotated Left Stereo", Triangulation::Triangulate_Iterative_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
-
-// In the horizontal setup, the epipoles are at infinity (since the cameras are parallel).
-// The points u and u' have the exact same y-coord. the cost to minimize is already zero. 
-// c6 coeff of the poly becomes 0 because the matrix F is missing the rank needed to generate a 6th-degree poly.
-// sol: modify the degree of the poly from 6 to the actual degree depending on the non-zero coeff we ended up with 
 
 TEST(PolyTest, C2RotatedLeftStereo)
 {
@@ -371,18 +334,11 @@ TEST(PolyTest, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    
-    Vec result = Triangulation::Triangulate_Poly(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Poly - C2 Rotated Left Stereo", Triangulation::Triangulate_Poly, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -395,18 +351,11 @@ TEST(PolyAbsTest, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    
-    Vec result = Triangulation::Triangulate_Poly_Abs(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Poly-Abs - C2 Rotated Left Stereo", Triangulation::Triangulate_Poly_Abs, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -419,18 +368,11 @@ TEST(Kanatani, C2RotatedLeftStereo)
 
     Vec U(878.821, 634.619);
     Vec U_prime(274.917, 511.5);
+    Vec expected_result(500.0, 0.0, 10000.0); 
     
-    
-    Vec result = Triangulation::Triangulate_Kanatani(U,U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-
-    Vec expected_result(500.0, 0.0, 10000.0); // this is the coordinates of the 3D point X we are triangulating in the world coordinates 
-	// distance should be = 0 with +- tolerance allowed
-    // If the distance is smaller than the tolerance, the test Passes green. If the distance is larger, the test Fails red and tells us exactly how far off we were.
-    
+    double error=RunTriangulationTest("Kanatani - C2 Rotated Left Stereo", Triangulation::Triangulate_Kanatani, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    double error= CalculateError(result, expected_result);
-
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 

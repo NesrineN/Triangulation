@@ -76,7 +76,7 @@ namespace Triangulation {
         //     }
         //     std::cout << std::endl;
         // }
-        // std::cout << "----------------------" << std::endl;
+        // std::cout << "---------------- ------" << std::endl;
 
         // we correct U and U_prime
         auto [U_hat, U_p_hat] = OptCorrection::ComputeCorrectedPairs(U, U_prime, F); 
