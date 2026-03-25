@@ -21,16 +21,6 @@
 typedef libNumerics::matrix<double> Mat;
 typedef libNumerics::vector<double> Vec;
 
-// create here a vector array where we store all the results of the errors for each method and each configuration :
-// Vec(0): Linear Eigen, Vec(1): Linear LS, Vec(2): Iterative Eigen, Vec(3): Iterative LS, Vec(4): Poly , Vec(5): Poly-Abs, Vec(6): Kanatani, Vec(7): Higher order correction
-Vec Errors_Horizontal_noiseless(8);
-Vec Errors_C2Left_noiseless(8);
-
-Vec Errors_Horizontal_noisy(8);
-Vec Errors_C2Left_noisy(8);
-
-
-
 // in here, we evaluate the error (distance) which is the norm of the result we obtained (X obtained) - expected result (X ground truth)
 // ideally, the error should be zero but we allow a tolerance of 1% deviation away from the actual distance of the X ground truth
 double CalculateError(const Vec& result, const Vec& expected_result)
@@ -172,7 +162,6 @@ TEST(LinearEigenTest, HorizontalStereo)
     double error=RunTriangulationTest("Linear Eigen - Horizontal Stereo", Triangulation::Triangulate_Linear_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(0)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -190,7 +179,6 @@ TEST(LinearLSTest, HorizontalStereo)
     double error=RunTriangulationTest("Linear LS - Horizontal Stereo", Triangulation::Triangulate_Linear_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(1)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -208,7 +196,6 @@ TEST(IterativeEigenTest, HorizontalStereo)
     double error=RunTriangulationTest("Iterative Eigen - Horizontal Stereo", Triangulation::Triangulate_Iterative_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(2)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -227,7 +214,6 @@ TEST(IterativeLSTest, HorizontalStereo)
     double error=RunTriangulationTest("Iterative LS - Horizontal Stereo", Triangulation::Triangulate_Iterative_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(3)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -250,7 +236,6 @@ TEST(PolyTest, HorizontalStereo)
     double error=RunTriangulationTest("Poly - Horizontal Stereo", Triangulation::Triangulate_Poly, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(4)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -268,7 +253,6 @@ TEST(PolyAbsTest, HorizontalStereo)
     double error=RunTriangulationTest("Poly-Abs - Horizontal Stereo", Triangulation::Triangulate_Poly_Abs, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(5)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -286,7 +270,6 @@ TEST(Kanatani, HorizontalStereo)
     double error=RunTriangulationTest("Kanatani - Horizontal Stereo", Triangulation::Triangulate_Kanatani, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(6)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -304,7 +287,6 @@ TEST(HigherOrder, HorizontalStereo)
     double error=RunTriangulationTest("Higher Order Optimal Correction - Horizontal Stereo", Triangulation::Triangulate_HigherOrder, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_Horizontal_noiseless(7)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -323,7 +305,6 @@ TEST(LinearEigenTest, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Linear Eigen - C2 Rotated Left Stereo", Triangulation::Triangulate_Linear_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(0)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -341,7 +322,6 @@ TEST(LinearLSTest, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Linear LS - C2 Rotated Left Stereo", Triangulation::Triangulate_Linear_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(1)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -359,7 +339,6 @@ TEST(IterativeEigenTest, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Iterative Eigen - C2 Rotated Left Stereo", Triangulation::Triangulate_Iterative_Eigen, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(2)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -378,7 +357,6 @@ TEST(IterativeLSTest, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Iterative LS - C2 Rotated Left Stereo", Triangulation::Triangulate_Iterative_LS, expected_result, U, U_prime, P0, P1);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(3)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -396,7 +374,6 @@ TEST(PolyTest, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Poly - C2 Rotated Left Stereo", Triangulation::Triangulate_Poly, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(4)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -414,7 +391,6 @@ TEST(PolyAbsTest, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Poly-Abs - C2 Rotated Left Stereo", Triangulation::Triangulate_Poly_Abs, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(5)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -432,7 +408,6 @@ TEST(Kanatani, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Kanatani - C2 Rotated Left Stereo", Triangulation::Triangulate_Kanatani, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(6)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -450,185 +425,6 @@ TEST(HigherOrder, C2RotatedLeftStereo)
     double error=RunTriangulationTest("Higher Order Optimal Correction - C2 Rotated Left Stereo", Triangulation::Triangulate_HigherOrder, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
     double max_percentage_error = 0.001;
     double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noiseless(7)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-TEST(NoisyLinearEigenTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0); 
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Linear Eigen - C2 Rotated Left Stereo", Triangulation::Triangulate_Linear_Eigen, expected_result, U, U_prime, P0, P1);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(0)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyLinearLSTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0);
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Linear LS - C2 Rotated Left Stereo", Triangulation::Triangulate_Linear_LS, expected_result, U, U_prime, P0, P1);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(1)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyIterativeEigenTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0); 
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Iterative Eigen - C2 Rotated Left Stereo", Triangulation::Triangulate_Iterative_Eigen, expected_result, U, U_prime, P0, P1);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(2)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyIterativeLSTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0);
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Iterative LS - C2 Rotated Left Stereo", Triangulation::Triangulate_Iterative_LS, expected_result, U, U_prime, P0, P1);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(3)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyPolyTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0);
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Poly - C2 Rotated Left Stereo", Triangulation::Triangulate_Poly, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(4)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyPolyAbsTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0);
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Poly-Abs - C2 Rotated Left Stereo", Triangulation::Triangulate_Poly_Abs, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(5)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyKanataniTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0); 
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Kanatani - C2 Rotated Left Stereo", Triangulation::Triangulate_Kanatani, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(6)= error / expected_result.qnorm();
-    DOUBLES_EQUAL(0.0, error, tolerance);
-}
-
-TEST(NoisyHigherOrderTest, C2RotatedLeftStereo)
-{   Mat P0, P1, K, Rl, Rr;
-    Vec Tl(3);
-    Vec Tr(3);
-    std::tie(P0, P1, K, Rl, Rr, Tl, Tr) = C2RotatedLeft();
-
-    Vec U(878.821, 634.619);
-    Vec U_prime(274.917, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0);
-
-    // adding noise:
-    double sigma = 1.5; // 1.5 pixel noise
-    AddGaussianNoise(U, sigma);
-    AddGaussianNoise(U_prime, sigma);
-
-    double error=RunTriangulationTest("Noisy Higher Order - C2 Rotated Left Stereo", Triangulation::Triangulate_HigherOrder, expected_result, U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
-    double max_percentage_error = 0.001; // might need to increase the tolerance with noise 
-    double tolerance = expected_result.qnorm() * max_percentage_error;
-    Errors_C2Left_noisy(7)= error / expected_result.qnorm();
     DOUBLES_EQUAL(0.0, error, tolerance);
 }
 
@@ -648,7 +444,9 @@ TEST(TriangulationBatch, NoiseRobustness)
 
     Vec U(1004.0835, 511.5);
     Vec U_prime(274.9165, 511.5);
-    Vec expected_result(500.0, 0.0, 10000.0);
+    Vec expected_result(500.0, 0.0, 10000.0); 
+    double norm_expected = std::sqrt(expected_result.qnorm());
+
     Vec result(3);
     double error;
     double percentage_error;
@@ -677,61 +475,61 @@ TEST(TriangulationBatch, NoiseRobustness)
             // 2. Running Triangulations
             result=Triangulation::Triangulate_Linear_Eigen(U, U_prime, P0, P1);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i)=percentage_error;
-            sum_lineigen += percentage_error;
+            sum_lineigen += error;
 
             result=Triangulation::Triangulate_Linear_LS(U, U_prime, P0, P1);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+1)=percentage_error;
-            sum_linls += percentage_error;
+            sum_linls += error;
 
             result=Triangulation::Triangulate_Iterative_Eigen(U, U_prime, P0, P1);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+2)=percentage_error;
-            sum_iteigen += percentage_error;
+            sum_iteigen += error;
 
             result=Triangulation::Triangulate_Iterative_LS(U, U_prime, P0, P1);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+3)=percentage_error;
-            sum_itls += percentage_error;
+            sum_itls += error;
 
             result=Triangulation::Triangulate_Poly(U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+4)=percentage_error;
-            sum_poly += percentage_error;
+            sum_poly += error;
             
             result=Triangulation::Triangulate_Poly_Abs(U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+5)=percentage_error;
-            sum_polyabs += percentage_error;
+            sum_polyabs += error;
 
             result=Triangulation::Triangulate_Kanatani(U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+6)=percentage_error;
-            sum_kanatani += percentage_error;
+            sum_kanatani += error;
 
             result=Triangulation::Triangulate_HigherOrder(U, U_prime, P0, P1, K, Rl, Rr, Tl, Tr);
             error = CalculateError(result, expected_result);
-            percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
+            // percentage_error = (error / std::sqrt(expected_result.qnorm())) *100;
             // Err(i+7)=percentage_error;
-            sum_higherorder += percentage_error;
+            sum_higherorder += error;
         }
 
-        Err(i)=sum_lineigen / trials;
-        Err(i+1)=sum_linls / trials;
-        Err(i+2)=sum_iteigen / trials;
-        Err(i+3)=sum_itls / trials;
-        Err(i+4)=sum_poly / trials;
-        Err(i+5)=sum_polyabs / trials;
-        Err(i+6)=sum_kanatani / trials;
-        Err(i+7)=sum_higherorder / trials;
+        Err(i)=((sum_lineigen / trials)/norm_expected)*100;
+        Err(i+1)=((sum_linls / trials)/norm_expected)*100;
+        Err(i+2)=((sum_iteigen / trials)/norm_expected)*100;
+        Err(i+3)=((sum_itls / trials)/norm_expected)*100;
+        Err(i+4)=((sum_poly / trials)/norm_expected)*100;
+        Err(i+5)=((sum_polyabs / trials)/norm_expected)*100;
+        Err(i+6)=((sum_kanatani / trials)/norm_expected)*100;
+        Err(i+7)=((sum_higherorder / trials)/norm_expected)*100;
     }
 
     std::cout << "\n" << std::string(140, '=') << "\n";
