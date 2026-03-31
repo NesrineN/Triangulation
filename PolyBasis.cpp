@@ -4,6 +4,7 @@
 #include <complex>
 #include <vector>
 #include <cmath>
+#include <limits>
 
 typedef libNumerics::matrix<double> Mat;
 typedef libNumerics::vector<double> Vec;
@@ -250,8 +251,6 @@ namespace Poly
 
     double EvaluateEquationAbs(const double& t, const double a, const double b, const double c, const double d, const double f, const double f_p){
         
-        if (std::sqrt((1+((t*f)*(t*f)))) < 1e-20) return 0;
-
         double term1= std::abs(t) / std::sqrt((1+((t*f)*(t*f))));
 
         double term2_num= std::abs(((c*t)+d));
@@ -266,34 +265,61 @@ namespace Poly
     // function that decides which root gives the minimum s(t)
     // we only want the real roots
     double FindBestRoot(const std::vector<double>& roots, const double a, const double b, const double c, const double d, const double f, const double f_p){
-        double minimum=1e99;
-        double best_root;
-        for(int i = 0; i < 6; i++) {
+        double minimum = std::numeric_limits<double>::infinity();
+        double st_inf = (1.0 / (f*f)) + ((c*c) / (a*a + f_p*f_p*c*c));
+        double best_root = 0.0;
+        bool found = false;
+
+        int degree = roots.size() / 2;
+        
+        for(int i = 0; i < degree; i++){
             double realPart = roots[2*i];
             double imagPart = roots[2*i + 1];
+            
+            if (std::abs(imagPart) > 1e-8)
+                continue;
 
             double st=EvaluateEquation(realPart, a, b, c, d, f, f_p);
             if(st<minimum){
                 minimum=st;
                 best_root=realPart;
+                found=true;
             }
+            
+        }
+
+        if (!found || st_inf < minimum) {
+            return std::numeric_limits<double>::infinity();
         }
 
         return best_root;
     }
 
     double FindBestRootAbs(const std::vector<double>& roots, const double a, const double b, const double c, const double d, const double f, const double f_p){
-        double minimum=1e99;
-        double best_root;
-        for(int i = 0; i < 8; i++) {
+        double minimum = std::numeric_limits<double>::infinity();
+        double st_inf = (1.0 / std::abs(f)) + (std::abs(c) / std::sqrt(a*a + f_p*f_p*c*c));
+        double best_root = 0.0;
+        bool found = false;
+
+        int degree = roots.size() / 2;
+        
+        for(int i = 0; i < degree; i++){
             double realPart = roots[2*i];
             double imagPart = roots[2*i + 1];
+
+            if (std::abs(imagPart) > 1e-8)
+                continue;
 
             double st=EvaluateEquationAbs(realPart, a, b, c, d, f, f_p);
             if(st<minimum){
                 minimum=st;
                 best_root=realPart;
+                found=true;
             }
+        }
+
+        if (!found || st_inf < minimum) {
+            return std::numeric_limits<double>::infinity();
         }
 
         return best_root;
@@ -315,15 +341,34 @@ namespace Poly
     }
 
     // function to Find the Point On the epipolar Line that is Closest To Origin u or u' --> that point is u^ or u^'
+    // Vec FindClosestPointToOrigin(const Vec& lambda){
+    //     // since the points U=U'=(0,0,1) are at the origin, the equation:
+    //     // u^ = u - (normal)(distance from u to lambda) becomes very simple
+
+    //     double distance=lambda(2)/((lambda(0)*lambda(0)) + (lambda(1)*lambda(1)));
+    //     double x=-(lambda(0)*distance);
+    //     double y=-(lambda(1)*distance);
+
+    //     return Vec(x,y);
+    // }
+
     Vec FindClosestPointToOrigin(const Vec& lambda){
-        // since the points U=U'=(0,0,1) are at the origin, the equation:
-        // u^ = u - (normal)(distance from u to lambda) becomes very simple
+        double a = lambda(0);
+        double b = lambda(1);
+        double c = lambda(2);
 
-        double distance=lambda(2)/((lambda(0)*lambda(0)) + (lambda(1)*lambda(1)));
-        double x=-(lambda(0)*distance);
-        double y=-(lambda(1)*distance);
+        double denom = a*a + b*b;
 
-        return Vec(x,y);
+        if (std::abs(denom) < 1e-20) {
+            return Vec(0.0, 0.0); // degenerate line
+        }
+
+        double scale = -c / denom;
+
+        double x = scale * a;
+        double y = scale * b;
+
+        return Vec(x, y);
     }
 
     // function to reverse the rigid transformations on u^ or u^' and returns u^ or u^' where the rigid transformations are undone
@@ -401,12 +446,30 @@ namespace Poly
         double b=F_transformed(1,2);
         double c=F_transformed(2,1);
         double d=F_transformed(2,2);
+
+        if (std::abs(b) < 1e-9 || std::abs(c) < 1e-9) {
+            // degenerate case → fallback
+            return std::pair<Vec, Vec>(Vec(0,0), Vec(0,0));
+        }
+
         double f=-(F_transformed(1,0)/b);
         double f_p=-(F_transformed(0,1)/c);
 
         // now, we find the best root that would minimize our cost function
         std::vector<double> roots=SolvePoly(a, b, c, d, f, f_p);
         double best_root=FindBestRoot(roots, a, b, c, d, f, f_p);
+        if (std::isinf(best_root)) {
+            Vec lambda(f, 0, -1);
+            Vec lambda_p(-f_p * c, a, c);
+
+            Vec U_hat_old = FindClosestPointToOrigin(lambda);
+            Vec U_hat_p_old = FindClosestPointToOrigin(lambda_p);
+
+            Vec U_hat = BackTransform(R, L, U_hat_old);
+            Vec U_hat_p = BackTransform(R_p, L_p, U_hat_p_old);
+
+            return {U_hat, U_hat_p};
+        }
 
         // after finding t, we get the equations of the 2 epipolar lines lambda(t) and lambda(t')
         Vec lambda=ComputeLeftEpipolarLine(best_root, f); // homogeneous coords
@@ -454,6 +517,19 @@ namespace Poly
         // now, we find the best root that would minimize our cost function
         std::vector<double> roots=SolvePolyAbs(a, b, c, d, f, f_p);
         double best_root=FindBestRootAbs(roots, a, b, c, d, f, f_p);
+
+        if (std::isinf(best_root)) {
+            Vec lambda(f, 0, -1);
+            Vec lambda_p(-f_p * c, a, c);
+
+            Vec U_hat_old = FindClosestPointToOrigin(lambda);
+            Vec U_hat_p_old = FindClosestPointToOrigin(lambda_p);
+
+            Vec U_hat = BackTransform(R, L, U_hat_old);
+            Vec U_hat_p = BackTransform(R_p, L_p, U_hat_p_old);
+
+            return {U_hat, U_hat_p};
+        }
 
         // after finding t, we get the equations of the 2 epipolar lines lambda(t) and lambda(t')
         Vec lambda=ComputeLeftEpipolarLine(best_root, f); // homogeneous coords

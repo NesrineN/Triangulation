@@ -420,7 +420,7 @@ inline vector<T> matrix<T>::row(int i) const
 {
     assert(i >= 0 && i < m_rows);
     vector<T> r(m_cols);
-    const T* in = p + i*m_rows;
+    const T* in = p + i*m_cols; // should be i*m_cols
     for(int i = 0; i < m_cols; i++)
         r(i) = *in++;
     return r;

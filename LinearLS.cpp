@@ -87,7 +87,7 @@ namespace Triangulation {
         Vec b = -A.col(3);
 
         // We then Solve A'x = b using SVD pseudo-inverse method
-        Vec solution=solveSVD(A_prime, b);
+        Vec solution=solveSVD(A_prime, b, 1e-9);
 
         // no dehomogenization needed cause we are in the non-homogeneous case
         if(solution(2)<0){

@@ -21,6 +21,7 @@ namespace Triangulation {
 // U and U_prime are in the form of u=w(u,v,1)
 Vec Triangulate_Linear_Eigen(const Vec& U, const Vec& U_prime, const Mat& P, const Mat& P_prime){
     // extracting the coordinates from the u and u' vectors
+    // assumes U = (u, v, 1)
     double u= U(0);
     double v= U(1);
     double u_p= U_prime(0);
@@ -82,6 +83,7 @@ Vec Triangulate_Linear_Eigen(const Vec& U, const Vec& U_prime, const Mat& P, con
         double Z= solution(2) / w_hom;
 
         if(Z<0){
+            // assumes first camera is at origin
             std::cout << "Z was negative" << std::endl;
             return Vec(0,0,0);// point is behind the camera
         }

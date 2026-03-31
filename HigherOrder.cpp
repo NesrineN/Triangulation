@@ -84,7 +84,7 @@ namespace OptCorrection
         Mat Pk=Mat::eye(3);
         Pk(2,2)=0;
 
-        double f0 = 600;
+        double f0 = 7291.67;
 
         Vec u(9);
         u(0)=F(0,0);
@@ -134,6 +134,8 @@ namespace OptCorrection
             xhatp=xp-xtildep;
             yhatp=yp-ytildep;
         }
+
+        // same thing: No normalization of corrected points!!!!!!!!!!! 
         return std::pair<Vec, Vec>(Vec(xhat, yhat, 1),Vec(xhatp, yhatp, 1));
     }
 

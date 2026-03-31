@@ -56,6 +56,8 @@ namespace OptCorrection
         Vec xhat=x-deltax;
         Vec xhatp=x_prime-deltaxp;
 
+        // should we normalize here before returning? i.e. should we divide xhat(0) and xhat(1) by xhat(2) and set xhat(2) to 1? (same thing for xhatp)
+
         return std::pair<Vec, Vec>(xhat, xhatp);
 
     }

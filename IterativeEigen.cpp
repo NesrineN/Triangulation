@@ -32,16 +32,16 @@ Vec Triangulate_Iterative_Eigen(const Vec& U, const Vec& U_prime, const Mat& P, 
     // Initial A matrix
     Mat A = Mat::zeros(4, 4);
 
+    Mat p0=P.copyRows(0,0);
+    Mat p1=P.copyRows(1,1);
+    Mat p2=P.copyRows(2, 2);
+
+    Mat p0p=P_prime.copyRows(0,0);
+    Mat p1p=P_prime.copyRows(1,1);
+    Mat p2p=P_prime.copyRows(2, 2);
+
     for (int i = 0; i < 10; i++) {
         // Building A where we divide first 2 rows by the weight w and last 2 rows by the weight w'
-
-        Mat p0=P.copyRows(0,0);
-        Mat p1=P.copyRows(1,1);
-        Mat p2=P.copyRows(2, 2);
-
-        Mat p0p=P_prime.copyRows(0,0);
-        Mat p1p=P_prime.copyRows(1,1);
-        Mat p2p=P_prime.copyRows(2, 2);
 
         // Row 0: uP3T-P1T
         Mat row0= (u*p2 - p0)/w;
@@ -71,9 +71,10 @@ Vec Triangulate_Iterative_Eigen(const Vec& U, const Vec& U_prime, const Mat& P, 
 
         // Convergence check: checking if the new solution is different than the old solution
         if (!(solution_1.nrow() == 0 || solution_1.ncol() == 0)) {
-            Mat difference = (solution_2-solution_1); // 4x1
-            Vec difference_vec=difference.col(0);
-            double diff=difference_vec.qnorm(); // distance between the 2 vectors 
+            Vec x1 = solution_1.col(0) / solution_1(3,0);
+            Vec x2 = solution_2.col(0) / solution_2(3,0);
+
+            double diff = (x2 - x1).qnorm();
             if (diff < 1e-6) break; // We converged!
         }
 
@@ -85,8 +86,11 @@ Vec Triangulate_Iterative_Eigen(const Vec& U, const Vec& U_prime, const Mat& P, 
         w_p = dot(p2p.row(0), solution_1.col(0));
         
         // to prevent division by zero
-        if (std::abs(w) < 1e-9) w = 1e-9;
-        if (std::abs(w_p) < 1e-9) w_p = 1e-9;
+        if (std::abs(w) < 1e-9)
+            w = std::copysign(1e-9, w);
+
+        if (std::abs(w_p) < 1e-9)
+            w_p = std::copysign(1e-9, w_p);
     }
 
     // Final de-homogenization
