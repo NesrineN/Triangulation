@@ -42,7 +42,9 @@ namespace OptCorrection
         double FxpPkFxp=dot(Fxp, PkFxp);
         double FTxPkFTx= dot(FTx, PkFTx);
         double denom= FxpPkFxp + FTxPkFTx;
-        if(std::abs(denom) < 1e-12){return std::pair<Vec, Vec>(Vec(0,0,0), Vec(0,0,0));}
+        if (std::abs(denom) < 1e-12) {
+            return {U, U_prime};
+        }
 
         Vec nom= xFxp*(PkFxp);
 
@@ -56,13 +58,35 @@ namespace OptCorrection
         Vec xhat=x-deltax;
         Vec xhatp=x_prime-deltaxp;
 
+        if (std::abs(xhat(2)) > 1e-12) {
+            xhat(0) /= xhat(2);
+            xhat(1) /= xhat(2);
+            xhat(2) = 1.0;
+        }
+
+        if (std::abs(xhatp(2)) > 1e-12) {
+            xhatp(0) /= xhatp(2);
+            xhatp(1) /= xhatp(2);
+            xhatp(2) = 1.0;
+        }
+
+        Vec uhat(2), uhatp(2);
+
+        uhat(0) = xhat(0);
+        uhat(1) = xhat(1);
+
+        uhatp(0) = xhatp(0);
+        uhatp(1) = xhatp(1);
+
         // should we normalize here before returning? i.e. should we divide xhat(0) and xhat(1) by xhat(2) and set xhat(2) to 1? (same thing for xhatp)
 
-        return std::pair<Vec, Vec>(xhat, xhatp);
+        return std::pair<Vec, Vec>(uhat, uhatp);
 
     }
 
 } // namespace OptCorrection
+
+// F always uses pixel coordinates u and u' 
 
 namespace Triangulation {
 

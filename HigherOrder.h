@@ -15,7 +15,7 @@ Vec ComputeDeltaHat(double xhat, double xhatp, double xtilde, double xtildep, do
 
 namespace OptCorrection {
 
-    std::pair<Vec, Vec> ComputeCorrectedPairs_Higher(const Vec& U, const Vec& U_prime, const Mat& F);
+    std::pair<Vec, Vec> ComputeCorrectedPairs_Higher(const Vec& U, const Vec& U_prime, const Mat& F, const Mat&K);
 
 } // namespace OptCorrection
 

@@ -74,7 +74,7 @@ Vec ComputeDeltaHat(double xhat, double xhatp, double xtilde, double xtildep, do
 
 namespace OptCorrection
 {
-    std::pair<Vec, Vec> ComputeCorrectedPairs_Higher(const Vec& U, const Vec& U_prime, const Mat& F){
+    std::pair<Vec, Vec> ComputeCorrectedPairs_Higher(const Vec& U, const Vec& U_prime, const Mat& F, const Mat&K){
 
         double x=U(0);
         double y=U(1);
@@ -83,6 +83,8 @@ namespace OptCorrection
 
         Mat Pk=Mat::eye(3);
         Pk(2,2)=0;
+
+        // double f0 = K(0,0); 
 
         double f0 = 7291.67;
 
@@ -114,7 +116,7 @@ namespace OptCorrection
 
             // updating xtilde and ytilde:
             double denom=dot(u,V0_delta_hat*u);
-            if(std::abs(denom) < 1e-12){return std::pair<Vec, Vec>(Vec(0,0,0), Vec(0,0,0));}
+            if(std::abs(denom) < 1e-12){return std::pair<Vec, Vec>(U, U_prime);}
             double scalar=dot(u, Delta_Hat)/denom;
             Mat Xtilde= scalar*(F.copy(0,1,0,2)*Vec(xhatp, yhatp, f0));
             xtilde=Xtilde(0,0);
@@ -126,8 +128,12 @@ namespace OptCorrection
             ytildep=Xtildep(1,0);
 
             double E=(xtilde*xtilde + ytilde*ytilde + xtildep*xtildep + ytildep*ytildep)/(f0*f0);
-            if(std::abs(E-E0)< 1e-9){return std::pair<Vec, Vec>(Vec(xhat, yhat, 1),Vec(xhatp, yhatp, 1));}
+            if (std::abs(E - E0) < 1e-9 * std::max(1.0, E0)){return std::pair<Vec, Vec>(Vec(xhat, yhat),Vec(xhatp, yhatp));}
 
+            if (!std::isfinite(E) || E > 1e10) {
+                return {U, U_prime};
+            }
+            
             E0=E;
             xhat=x-xtilde;
             yhat=y-ytilde;
@@ -135,8 +141,14 @@ namespace OptCorrection
             yhatp=yp-ytildep;
         }
 
-        // same thing: No normalization of corrected points!!!!!!!!!!! 
-        return std::pair<Vec, Vec>(Vec(xhat, yhat, 1),Vec(xhatp, yhatp, 1));
+        Vec uhat(2), uhatp(2);
+        uhat(0) = xhat;
+        uhat(1) = yhat;
+
+        uhatp(0) = xhatp;
+        uhatp(1) = yhatp;
+
+        return std::pair<Vec, Vec>(uhat,uhatp);
     }
 
 } // namespace OptCorrection
@@ -158,7 +170,7 @@ namespace Triangulation {
         // std::cout << "---------------- ------" << std::endl;
 
         // we correct U and U_prime
-        auto [U_hat, U_p_hat] = OptCorrection::ComputeCorrectedPairs_Higher(U, U_prime, F); 
+        auto [U_hat, U_p_hat] = OptCorrection::ComputeCorrectedPairs_Higher(U, U_prime, F, K); 
 
         // we then use the corrected pair and P and P_prime to do triangulation using linear Eigen
         Vec result= Triangulation::Triangulate_Linear_Eigen(U_hat, U_p_hat, P, P_prime);
